@@ -7,46 +7,46 @@ module.exports = function(ctx) {
     
     // Parse config.xml for replacements
     var config = xml.parseElementtreeSync(path.join(ctx.opts.projectRoot, 'config.xml'));
-    var platforms = config.findall("./platform");
+    var elements = config.findall("./platform");
     
-    var replace = null;
+    var platforms = null;
     
-    for(var i = 0; i < platforms.length; ++i) {
-        var platform = platforms[i];
-        var replacements = platform.findall("./replace-string");
-        if(replacements.length === 0) continue;
+    for(var i = 0; i < elements.length; ++i) {
+        var element = elements[i];
+        var replaceElements = element.findall("./replace-string");
+        if(replaceElements.length === 0) continue;
         
-        if(!replace) {
-            replace = {};
+        if(!platforms) {
+            platforms = {};
         }
         
-        if(!(platform.attrib.name in replace)) {
-            replace[platform.attrib.name] = {};
+        if(!(element.attrib.name in platforms)) {
+            platforms[element.attrib.name] = {};
         }
         
-        for(var j = 0; j < replacements.length; ++j) {
-            var replacement = replacements[j];
-            if(!(replacement.attrib.file in replace[platform.attrib.name])) {
-                replace[platform.attrib.name][replacement.attrib.file] = {};
+        for(var j = 0; j < replaceElements.length; ++j) {
+            var replaceElement = replaceElements[j];
+            if(!(replaceElement.attrib.file in platforms[element.attrib.name])) {
+                platforms[element.attrib.name][replaceElement.attrib.file] = {};
             }
             
-            replace[platform.attrib.name][replacement.attrib.file][replacement.attrib.replace] = replacement.attrib.find;
+            platforms[element.attrib.name][replaceElement.attrib.file][replaceElement.attrib.replace] = replaceElement.attrib.find;
         }
     }
-    if(!replace) {
+    if(!platforms) {
         return;
     }
     
     // Run the replacements
     console.log("Executing string replace");
-    var regex = /^regex\:/i
+    var regex = /^regex\:/i;
     
-    for(var i in replace) {
-        if(!replace.hasOwnProperty(i) || ctx.opts.platforms.indexOf(i) < 0) continue;
-        console.log("Beginning replacement for platform %s", i);
+    for(var platform in platforms) {
+        if(!platforms.hasOwnProperty(platform) || ctx.opts.platforms.indexOf(platform) < 0) continue;
+        console.log("Beginning replacement for platform %s", platform);
         
-        var platformReplace = replace[i];
-        var platformRoot = path.join(ctx.opts.projectRoot, 'platforms', i);
+        var platformReplace = platforms[platform];
+        var platformRoot = path.join(ctx.opts.projectRoot, 'platforms', platform);
         
         for(var file in platformReplace) {
             if(!platformReplace.hasOwnProperty(file)) continue;
@@ -71,7 +71,7 @@ module.exports = function(ctx) {
             fs.writeFileSync(filePath, result, 'utf8');
         }
         
-        console.log("Completed replacement for platform %s", i);
+        console.log("Completed replacement for platform %s", platform);
     }
     
 };
