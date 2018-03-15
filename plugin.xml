@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova-plugin-platform-replace"
+    version="1.0.0">
+
+    <name>Platform String Replace</name>
+
+    <description>A plugin for replacing strings in platform files.</description>
+
+    <author>Trent Gardner</author>
+
+    <license>Apache 2.0</license>
+
+    <keywords>Platform, String, Replace</keywords>
+
+    <repo>https://github.com/tgardner/cordova-plugin-platform-replace.git</repo>
+
+    <issue>https://github.com/tgardner/cordova-plugin-platform-replace/issues</issue>
+    
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+    
+    <hook src="hooks/platformReplace.js" type="after_prepare" />
+</plugin>
