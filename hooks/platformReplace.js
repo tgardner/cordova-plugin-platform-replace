@@ -1,9 +1,9 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = function(ctx) {
     
-    var fs = ctx.requireCordovaModule('fs'),
-        path = ctx.requireCordovaModule('path'),
-        q = ctx.requireCordovaModule('q'),
-        xml = ctx.requireCordovaModule('cordova-common').xmlHelpers;
+    var xml = ctx.requireCordovaModule('cordova-common').xmlHelpers;
     
     // Parse config.xml for replacements
     var config = xml.parseElementtreeSync(path.join(ctx.opts.projectRoot, 'config.xml'));

@@ -1,12 +1,12 @@
 {
   "name": "cordova-plugin-platform-replace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A plugin for replacing strings in platform files.",
   "cordova": {
     "id": "cordova-plugin-platform-replace",
     "platforms": [
       "android",
-	  "ios"
+      "ios"
     ]
   },
   "repository": {
@@ -14,8 +14,8 @@
     "url": "git+https://github.com/tgardner/cordova-plugin-platform-replace.git"
   },
   "keywords": [
-	"string",
-	"replace",
+    "string",
+    "replace",
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
